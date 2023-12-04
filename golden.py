@@ -13,14 +13,12 @@ def __load_dotenv():
                 k, v = line.split("=")
                 res[k] = v
             return res
-    except Exception as e:
-        print(e)
+    except:  # noqa
         return None
 
 
 def retriever(year, day):
-    if not (env := __load_dotenv()):
-        raise RuntimeError("Could not load environment!")
+    env = __load_dotenv()
 
     if day == SAMPLE:
         if not os.path.isfile("data/sample.txt"):
@@ -30,10 +28,14 @@ def retriever(year, day):
 
     filename = f"data/day{day:02d}.txt"
     if not os.path.isfile(filename):
-        url = f"https://adventofcode.com/{year}/day/{day}/input"
-        req = urllib.request.Request(url)
-        req.add_header("Cookie", f"session={env['AOC_SESSION']}")
-        data = urllib.request.urlopen(req).read()
+        if env:
+            url = f"https://adventofcode.com/{year}/day/{day}/input"
+            req = urllib.request.Request(url)
+            req.add_header("Cookie", f"session={env['AOC_SESSION']}")
+            data = urllib.request.urlopen(req).read()
+        else:
+            data = f"Get the input data for Day {day} from AoC and save as {filename}"
+            data = str.encode(data)
         with open(filename, "wb") as f:
             f.write(data)
     f = open(filename, "r")
