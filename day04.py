@@ -9,16 +9,10 @@ for i, line in enumerate(lines):
     numbers, winning = points.split("|")
     numbers = numbers.split()
     winning = winning.split()
-    cnt = cnt2 = 0
-    for nmb in numbers:
-        if nmb in winning:
-            cnt2 += 1
-            if cnt == 0:
-                cnt = 1
-            else:
-                cnt *= 2
-    part1 += cnt
-    for j in range(i + 1, i + cnt2 + 1):
+    won = len(set(set(numbers) & set(winning)))
+    if won > 0:
+        part1 += 2**(won - 1)
+    for j in range(i + 1, i + won + 1):
         times[j] += times[i]
 
 print("Puzzle 4.1:", part1)
