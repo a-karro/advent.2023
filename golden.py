@@ -32,11 +32,12 @@ def retriever(year, day):
             url = f"https://adventofcode.com/{year}/day/{day}/input"
             req = urllib.request.Request(url)
             req.add_header("Cookie", f"session={env['AOC_SESSION']}")
-            data = urllib.request.urlopen(req).read()
+            data = urllib.request.urlopen(req).read().decode()
+            if data[-1] == "\n":
+                data = data[:-1]
         else:
             data = f"Get the input data for Day {day} from AoC and save as {filename}"
-            data = str.encode(data)
-        with open(filename, "wb") as f:
+        with open(filename, "w") as f:
             f.write(data)
     f = open(filename, "r")
     return f
