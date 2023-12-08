@@ -16,5 +16,12 @@ print("Puzzle 6.1:", prod(p1))
 time = int(lines[0].replace(" ", ""))
 record = int(lines[1].replace(" ", ""))
 
-p2 = sum(1 for i in range(time) if i * (time - i) > record)
-print("Puzzle 6.2:", p2)
+rb = 0
+while rb * (time - rb) < record:
+    rb += 1
+
+re = time
+while re * (time - re) < record:
+    re -= 1
+
+print("Puzzle 6.2:", re - rb + 1)
