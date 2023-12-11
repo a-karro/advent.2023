@@ -103,4 +103,4 @@ p2 = []
 for i, hand in enumerate(sorted(hands, key=functools.cmp_to_key(compare_jokerized))):
     p2.append((i+1) * hand[2])
 
-print("Puzzle 7.1:", sum(p2))
+print("Puzzle 7.2:", sum(p2))
